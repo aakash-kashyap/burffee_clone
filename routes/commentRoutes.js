@@ -28,6 +28,7 @@ router.post("/post/:id/comment",isLoggedIn, function(req,res){
               if(err){
                   console.log(err);
               }else{
+                  comment.text = req.sanitize(comment.text);
                   comment.author.id = req.user._id;
                   comment.author.username = req.user.username;
                   comment.save();
