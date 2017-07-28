@@ -1,0 +1,84 @@
+<% include ./partials/header %>
+
+
+<div class="container">
+    <br></br>
+    <br></br>
+    
+  <div class="row">
+    <nav class="col-sm-3">
+        <div data-spy="affix" data-offset-top="0">
+            <h2><span class="glyphicon glyphicon-user"> <%= currentUser.username.toUpperCase() %> </h2>
+            <hr>
+            <h3>Interest</h3>
+            <ul class="nav nav-bar" >
+                <li><a href="/globaltag/game">Game</a></li>
+                <li><a href="/globaltag/news">News</a></li>
+                <li><a href="/globaltag/health">Health</a></li>
+                <li><a href="/globaltag/love">Love</a></li>
+                <li><a href="/globaltag/motivation">Motivation</a></li>
+                <li><a href="/globaltag/entertainment">Entertainment</a></li>  
+            </ul>       
+        </div>
+     
+    </nav>
+    <div class="col-sm-6">
+    <% if(blogposts){ %>
+        <% blogposts.forEach(function(blogpost){ %>
+            
+            <div >
+                    <br>
+                    </hr>
+                    <h3> <%=blogpost.title %> </h3>
+                    <h4>By: <em> <%= blogpost.author.username %> </em></h4>
+                    <h5>On:  <%= blogpost.created.toDateString() %> </h5>  
+                    <h5>Tag: <%= blogpost.tag%></h5>
+                    
+                    <p> <%- blogpost.content.substring(0, 150) %>... </p>
+                    <a href="/post/<%= blogpost._id %>" > Read More </a>   
+                    
+                    <br>
+              
+            </div>
+        
+        <% }); }%>
+        
+        
+    <!--Displays all posts sent by tag-->
+        
+        <% if(tagposts){%>
+        <% tagposts.forEach(function(tagpost){ %>
+            <div >
+                
+                <% if(tagpost.title ) { %>
+                    <br>
+                    </hr>
+                    <h3> <%=tagpost.title %> </h3>
+                    <h4>By: <em> <%= tagpost.author.username %> </em></h4>
+                    <h5>On:  <%= tagpost.created.toDateString()  %> </h5>  
+                    <h5>Tag: <%= tagpost.tag%></h5>
+                    <p> <%- tagpost.content.substring(0,100) %> </p>
+                    <a href="/post/<%= tagpost._id %>" > Read More </a>
+                    
+                    <br>
+                <% };%>
+            </div>
+        
+        <% }); };%>
+            
+    </div>
+    
+    <nav class="col-sm-3">
+        <div data-spy="affix" data-offset-top="205">
+        
+        </div>
+     
+    </nav>
+    
+    
+  </div>
+</div>
+
+    
+
+<% include ./partials/footer %>

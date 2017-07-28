@@ -1,0 +1,56 @@
+<% include ./partials/header %>
+    
+<div class="container">
+    <br></br>
+    
+  <div class="row">
+    <nav class="col-sm-6 col-md-offset-3">
+    <h3> <%=blogpost.title %> </h3>
+    <h4>By: <em> <%= blogpost.author.username %> </em></h4>
+    <h5>On:  <%= blogpost.created.toDateString() %> </h5>  
+    <h5>Tag: <%= blogpost.tag%></h5>
+    
+    <p> <%- blogpost.content%></p>
+    
+    <% if(currentUser.username == blogpost.author.username) { %>
+      <div class="post-action">
+         <a class="btn btn-default btn-sm" href="/post/<%= blogpost._id%>/edit ">Edit </a>
+         
+        <form action="/post/<%= blogpost._id %>?_method=DELETE" method ="POST">
+          <input class="btn btn-default btn-sm " type="submit" value="Delete"></input>
+        </form>  
+      </div>
+         
+    <% };%>
+    <hr>   
+    
+    <h3 class="text-center">Comments</h3>
+    
+    <% if(currentUser.username == blogpost.author.username) { %>
+    
+    <% blogpost.comments.forEach(function(comment){ %>
+      <br>
+      <h5><span class="glyphicon glyphicon-user"><%= comment.author.username.toUpperCase()%>:  <%= comment.text %></h5>
+      <h6>On: <%= comment.created.toDateString() %> </h6>      
+      
+    <% });%>
+    <br>
+    <form id="register-form" class="text-left" action= "/post/<%=blogpost._id%>/comment" method="post">
+			<div class="login-form-main-message"></div>
+				<div class="">
+				
+					
+						<label for="reg_comment" class=""><span class="glyphicon glyphicon-user"> <%= currentUser.username.toUpperCase()%> </label>
+						<input type="text" class="form-control" id="reg_comment" name="comment[text]" placeholder="reply here">
+
+				</div>	
+					
+				<br>
+				<button type="submit" class="btn btn-default btn-sm">Reply</button>
+			
+		</form>
+		
+		<% };%>
+		<br></br>
+
+<% include ./partials/footer %>

@@ -1,0 +1,41 @@
+<% include ./partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            
+       
+            <div class="logo text-center">Create Post</div>
+            <form action="/publish" method="post">
+                <div class="form-group">
+                <label for="titleinput">Title</label>
+                <input type="text" class="form-control" id="titleinput" name="post[title]" placeholder="title">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tagselect">Tag</label>
+                    <select class="form-control" id="tagselect" name="post[tag]">
+                      <option>Game</option>
+                      <option>Entertainment</option>
+                      <option>News</option>
+                      <option>Health</option>
+                      <option>Love</option>
+                      <option>Travel</option>
+                      <option>Life</option>
+                    </select>
+                 </div>
+                 
+                <div class="form-group">
+                <label for="textareainput">Content</label>
+                <textarea class="form-control" id="textareainput" rows="10" placeholder="content" name="post[content]"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Post</button>
+            </form>    
+        </div>
+    </div>
+</div>
+
+
+
+
+<% include ./partials/footer %>

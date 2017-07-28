@@ -1,0 +1,110 @@
+<% include partials/header %>
+
+
+<div class="container">
+    <br></br>
+    <br></br>
+    
+  <div class="row">
+    <nav class="col-sm-3">
+        <div data-spy="affix" data-offset-top="0">
+            <h2><span class="glyphicon glyphicon-user"> <%= currentUser.username.toUpperCase() %> </h2>
+            <hr>
+            <h3>Interest</h3>
+            <ul class="nav nav-bar" >
+                <li><a href="/hometag/game">Game</a></li>
+                <li><a href="/hometag/news">News</a></li>
+                <li><a href="/hometag/health">Health</a></li>
+                <li><a href="/hometag/love">Love</a></li>
+                <li><a href="/hometag/travel">Travel</a></li>
+                <li><a href="/hometag/life">Life</a></li>
+                <li><a href="/hometag/entertainment">Entertainment</a></li>  
+            </ul>       
+        </div>
+     
+    </nav>
+    <div class="col-sm-6">
+        <!--Display all User's related Posts-->
+      
+      <% if(user){%>
+        <% user.blogpost.forEach(function(blogpost){ %>
+            <div >
+                
+                <% if(blogpost.title && blogpost.author.username.toLowerCase() == currentUser.username.toLowerCase() ) { %>
+                    <br>
+                    </hr>
+                    <h3> <%=blogpost.title %> </h3>
+                    <h4>By: <em> <%= blogpost.author.username %> </em></h4>
+                    <h5>On:  <%= blogpost.created.toDateString()  %> </h5>
+                    <h5>Tag: <%= blogpost.tag%></h5>
+                    <p> <%- blogpost.content.substring(0,100) %> </p>
+                    <a href="/post/<%= blogpost._id %>" > Read More </a>
+                    
+                    <br>
+                <% };%>
+            </div>
+        
+        <% }); };%>
+        
+        
+        <!--Displays all posts sent by tag-->
+        
+        <% if(tagposts){%>
+        <% tagposts.forEach(function(tagpost){ %>
+            <div >
+                
+                <% if(tagpost.title && tagpost.author.username.toLowerCase() == currentUser.username.toLowerCase() ) { %>
+                    <br>
+                    </hr>
+                    <h3> <%=tagpost.title %> </h3>
+                    <h4>By: <em> <%= tagpost.author.username %> </em></h4>
+                    <h5>On:  <%= tagpost.created.toDateString()  %> </h5>  
+                    <h5>Tag: <%= tagpost.tag%></h5>
+                    <p> <%- tagpost.content.substring(0,100) %> </p>
+                    <a href="/post/<%= tagpost._id %>" > Read More </a>
+                    
+                    <br>
+                <% };%>
+            </div>
+        
+        <% }); };%>
+            
+    </div>
+    
+    <nav class="col-sm-3">
+        <div data-spy="affix" data-offset-top="500">
+        <% if(allusers){ %>    
+            <h3>People to follow</h3>
+            <ul class="nav nav-bar" >
+                
+                    <% allusers.forEach(function(user){ %>
+                       
+                        <% if(user.username != currentUser.username){ %>
+                        
+                    <li>
+                        <h3><span class="glyphicon glyphicon-user"> <%= user.username.toUpperCase()%></h3>
+                        <h5>Follows: <%= user.follows.length%></h5>
+                        <p>Followers: <%= user.followers.length%></p>
+                        
+                        
+                        <form action="/user/add/<%= user._id%>" method="post">
+                                <input type="submit" value="Follow"></input>
+                        </form>
+                        
+                        </br>
+                    </li>
+                    <% } });%>
+               
+            </ul>
+         <% }%> 
+        </div>
+     
+    </nav>
+    
+    
+  </div>
+</div>
+
+    
+
+<% include partials/footer %>
